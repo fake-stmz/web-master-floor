@@ -80,9 +80,9 @@ class Partner(models.Model):
     type = models.ForeignKey(Partner_Type, on_delete=models.CASCADE)
     director = models.CharField(max_length=100)
     email = models.EmailField()
-    phone = models.IntegerField()
+    phone = models.BigIntegerField()
     address = models.ForeignKey(House, on_delete=models.CASCADE)
-    inn = models.IntegerField(unique=True)
+    inn = models.BigIntegerField(unique=True)
     rating = models.IntegerField(
         validators=[
             MinValueValidator(0),
