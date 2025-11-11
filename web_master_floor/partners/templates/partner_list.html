@@ -8,8 +8,8 @@
 
         {% for partner in partners %}
         <div class="uk-card uk-card-default uk-margin" style="background-color: #F4E8D3;">
-            <div class="uk-card-body">
-                <div class="uk-flex uk-flex-between" uk-toggle="target: #edit-{{ partner.id }}">
+            <div class="uk-card-body" uk-toggle="target: #edit-{{ partner.id }}; mode: hover; animation: uk-animation-fade">
+                <div class="uk-flex uk-flex-between">
                     <div>
                         <h3 class="uk-card-title">{{ partner.partner_type }} | <a class="uk-link-text" href="#">{{ partner.name }}</a></h3>
                         <p>Директор: {{ partner.director }}</p>
