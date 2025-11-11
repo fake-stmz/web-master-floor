@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} | Список партнеров{% endblock %}
+
+{% block content %}
+    <div class="uk-container uk-margin-top">
+        <a class="uk-button uk-button-primary uk-width-1-1" href="#" style="background-color: #67BA80;">Добавить</a>
+
+        {% for partner in partners %}
+        <div class="uk-card uk-card-default uk-margin" style="background-color: #F4E8D3;">
+            <div class="uk-card-body">
+                <div class="uk-flex uk-flex-between" uk-toggle="target: #edit-{{ partner.id }}">
+                    <div>
+                        <h3 class="uk-card-title">{{ partner.partner_type }} | <a class="uk-link-text" href="#">{{ partner.name }}</a></h3>
+                        <p>Директор: {{ partner.director }}</p>
+                        <p>Рейтинг: {{ partner.rating }}</p>
+                    </div>
+
+                    <div>
+                        <p>{{ partner.discount }}%</p>
+                    </div>
+                </div>
+
+                <a class="uk-button uk-button-primary uk-width-1-1" href="#" style="background-color: #67BA80;" id="edit-{{ partner.id }}" hidden>
+                    Редактировать
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

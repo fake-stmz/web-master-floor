@@ -60,7 +60,7 @@ class Street(models.Model):
 
 
 class Postal_Code(models.Model):
-    code = models.IntegerField(primary_key=True, max_length=6)
+    code = models.IntegerField(primary_key=True)
 
     def __str__(self):
         return str(self.code)
@@ -72,12 +72,12 @@ class House(models.Model):
     postal_code = models.ForeignKey(Postal_Code, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.number}, {self.street.name}"
+        return f"{self.postal_code}, {self.street.city.region}, {self.street.city}, {self.street}, {self.number}"
 
 
 class Partner(models.Model):
     name = models.CharField(max_length=100)
-    type = models.ForeignKey(Partner_Type, on_delete=models.CASCADE)
+    partner_type = models.ForeignKey(Partner_Type, on_delete=models.CASCADE)
     director = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.BigIntegerField()
@@ -89,6 +89,21 @@ class Partner(models.Model):
             MaxValueValidator(10)
         ]
     )
+    
+    def discount(self):
+        sales_quantity = 0
+        
+        for sale in Sale.objects.filter(partner=self.id):
+            sales_quantity += sale.quantity
+        
+        if sales_quantity < 10000:
+            return 0
+        elif sales_quantity < 50000:
+            return 5
+        elif sales_quantity < 300000:
+            return 10
+        else:
+            return 15
     
     def __str__(self):
         return self.name
