@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} | История продаж{% endblock %}
+
+{% block content %}
+    <div class="uk-container uk-margin-top">
+        <h1 class="uk-title uk-text-center">{{ partner_name }} | История реализации</h1>
+
+        {% for sale in sales %}
+        <div class="uk-card uk-card-default uk-margin" style="background-color: #F4E8D3;">
+            <div class="uk-card-body">
+                <div class="uk-flex uk-flex-between uk-flex-middle">
+                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ sale.product.name }}</h3>
+
+                    <div>
+                        <p class="uk-text-right">Количество: {{ sale.quantity }}</p>
+                        <p class="uk-text-right uk-margin-remove-bottom">Дата: {{ sale.sale_date|date:"d.m.Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

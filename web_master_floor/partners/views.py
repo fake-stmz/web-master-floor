@@ -8,6 +8,7 @@ def partner_list(request):
     
     return render(request, 'partner_list.html', { 'partners': partners })
 
+
 def edit_partner(request, partner_id):
     
     partner = Partner.objects.get(id=partner_id)
@@ -20,6 +21,7 @@ def edit_partner(request, partner_id):
     
     return render(request, 'edit_add.html', { 'partner': partner, 'partner_types': partner_types })
 
+
 def add_partner(request):
     
     partner_types = Partner_Type.objects.all()
@@ -30,6 +32,15 @@ def add_partner(request):
         return redirect('partner_list')
     
     return render(request, 'edit_add.html', { 'partner_types': partner_types })
+
+
+def sales_history(request, partner_id):
+    
+    sales = Sale.objects.filter(partner=partner_id)
+    partner_name = Partner.objects.get(id=partner_id).name
+    
+    return render(request, 'sales_history.html', { 'sales': sales, 'partner_name': partner_name })
+
 
 def create_or_update_partner(request, partner_id=None):
     
