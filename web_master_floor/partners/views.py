@@ -11,11 +11,19 @@ def partner_list(request):
 
 def edit_partner(request, partner_id):
     
-    partner = Partner.objects.get(id=partner_id)
+    try:
+        partner = Partner.objects.get(id=partner_id)
+    except:
+        return redirect('add_partner')
+    
     partner_types = Partner_Type.objects.all()
     
     if request.method == 'POST':
-        create_or_update_partner(request, partner_id)
+        
+        error = create_or_update_partner(request, partner_id)
+        
+        if error:
+            return render(request, 'edit_add.html', { 'partner': partner, 'partner_types': partner_types, 'error': error })
         
         return redirect('partner_list')
     
@@ -27,7 +35,11 @@ def add_partner(request):
     partner_types = Partner_Type.objects.all()
     
     if request.method == 'POST':
-        create_or_update_partner(request)
+        
+        error = create_or_update_partner(request)
+        
+        if error:
+            return render(request, 'edit_add.html', { 'partner_types': partner_types, 'error': error })
         
         return redirect('partner_list')
     
@@ -44,28 +56,33 @@ def sales_history(request, partner_id):
 
 def create_or_update_partner(request, partner_id=None):
     
-    partner = None
+    try:
+        partner = None
+        
+        if partner_id:
+            partner = Partner.objects.get(id=partner_id)
+        else:
+            partner = Partner()
+        
+        partner.name = request.POST.get('name')
+        partner.director = request.POST.get('director')
+        partner.email = request.POST.get('email')
+        partner.phone = request.POST.get('phone')
+        partner.inn = request.POST.get('inn')
+        partner.rating = request.POST.get('rating')
+            
+        partner.partner_type = Partner_Type.objects.get(id=request.POST.get('type'))
+            
+        region = Region.objects.get_or_create(name=request.POST.get('region'))[0]
+        city = City.objects.get_or_create(name=request.POST.get('city'), region=region)[0]
+        street = Street.objects.get_or_create(name=request.POST.get('street'), city=city)[0]
+        postal_code = Postal_Code.objects.get_or_create(code=request.POST.get('postal-code'))[0]
+        house = House.objects.get_or_create(number=request.POST.get('house'), street=street, postal_code=postal_code)[0]
+            
+        partner.address = house
+            
+        partner.save()
+    except:
+        return "Данные введены некорректно"
     
-    if partner_id:
-        partner = Partner.objects.get(id=partner_id)
-    else:
-        partner = Partner()
-    
-    partner.name = request.POST.get('name')
-    partner.director = request.POST.get('director')
-    partner.email = request.POST.get('email')
-    partner.phone = request.POST.get('phone')
-    partner.inn = request.POST.get('inn')
-    partner.rating = request.POST.get('rating')
-        
-    partner.partner_type = Partner_Type.objects.get(id=request.POST.get('type'))
-        
-    region = Region.objects.get_or_create(name=request.POST.get('region'))[0]
-    city = City.objects.get_or_create(name=request.POST.get('city'), region=region)[0]
-    street = Street.objects.get_or_create(name=request.POST.get('street'), city=city)[0]
-    postal_code = Postal_Code.objects.get_or_create(code=request.POST.get('postal-code'))[0]
-    house = House.objects.get_or_create(number=request.POST.get('house'), street=street, postal_code=postal_code)[0]
-        
-    partner.address = house
-        
-    partner.save()
+    return
