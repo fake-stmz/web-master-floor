@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="uk-container uk-margin-top">
-        <a class="uk-button uk-button-primary uk-width-1-1" href="#" style="background-color: #67BA80;">Добавить</a>
+        <a class="uk-button uk-button-primary uk-width-1-1" href="{% url 'add_partner' %}" style="background-color: #67BA80;">Добавить</a>
 
         {% for partner in partners %}
         <div class="uk-card uk-card-default uk-margin" style="background-color: #F4E8D3;">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <a class="uk-button uk-button-primary uk-width-1-1" href="#" style="background-color: #67BA80;" id="edit-{{ partner.id }}" hidden>
+                <a class="uk-button uk-button-primary uk-width-1-1" href="{% url 'edit_partner' partner.id %}" style="background-color: #67BA80;" id="edit-{{ partner.id }}" hidden>
                     Редактировать
                 </a>
             </div>

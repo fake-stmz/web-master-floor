@@ -1,7 +1,127 @@
-{% extend "base.html" %}
+{% extends "base.html" %}
 
 {% block title %} | {% if partner %}Редактировать{% else %}Добавить{% endif %}{% endblock %}
 
 {% block content %}
+    <div class="uk-container uk-margin-top">
+        <div class="uk-card uk-card-default" style="background-color: #F4E8D3;">
+            <div class="uk-card-header">
+                <h2 class="uk-card-title uk-text-center">{% if partner %}Редактировать{% else %}Добавить{% endif %} партнера</h3>
+            </div>
 
+            <div class="uk-card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="uk-margin">
+                        <h3>Общая информация</h3>
+
+                        <div class="uk-flex">
+                            <div class="uk-width-1-4">
+                                <label class="uk-form-label" for="form-name">Название</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-name" type="text" name="name" value="{% if partner %}{{ partner.name }}{% endif %}" placeholder="Название" required>
+                                </div>
+                            </div>
+
+                            <div class="uk-margin-left uk-width-1-4">
+                                <label class="uk-form-label" for="form-inn">ИНН</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-inn" type="number" name="inn" value="{% if partner %}{{ partner.inn }}{% endif %}" placeholder="ИНН" required>
+                                </div>
+                            </div>
+
+                            <div class="uk-margin-left uk-width-1-4">
+                                <label class="uk-form-label" for="form-type">Тип</label>
+                                <div class="uk-form-controls">
+                                    <select class="uk-select" id="form-type" name="type">
+                                        {% for type in partner_types %}
+                                            <option value="{{ type.id }}" {%  if type == partner.partner_type %}selected{% endif %}>{{ type }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="uk-margin-left uk-width-1-4">
+                                <label class="uk-form-label" for="form-rating">Рейтинг</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-rating" type="number" name="rating" value="{% if partner %}{{ partner.rating }}{% endif %}" placeholder="Рейтинг" min="1" max="10" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Юридический адрес</h3>
+
+                        <div class="uk-flex uk-flex-column">
+                            <div class="uk-flex">
+                                <div class="uk-width-1-3">
+                                    <label class="uk-form-label" for="form-region">Регион</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-region" type="text" name="region" value="{% if partner %}{{ partner.address.street.city.region.name }}{% endif %}" placeholder="Регион" required>
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin-left uk-width-1-3">
+                                    <label class="uk-form-label" for="form-city">Город</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-city" type="text" name="city" value="{% if partner %}{{ partner.address.street.city.name }}{% endif %}" placeholder="Город" required>
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin-left uk-width-1-3">
+                                    <label class="uk-form-label" for="form-street">Улица</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-street" type="text" name="street" value="{% if partner %}{{ partner.address.street.name }}{% endif %}" placeholder="Улица" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="uk-flex uk-margin-top">
+                                <div class="uk-width-1-2">
+                                    <label class="uk-form-label" for="form-house">Дом</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-house" type="text" name="house" value="{% if partner %}{{ partner.address.number }}{% endif %}" placeholder="Дом" required>
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-2 uk-margin-left">
+                                    <label class="uk-form-label" for="form-postal-code">Индекс</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-postal-code" type="number" name="postal-code" value="{% if partner %}{{ partner.address.postal_code }}{% endif %}" placeholder="Индекс" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Контакты</h3>
+
+                        <div class="uk-flex">
+                            <div class="uk-width-1-3">
+                                <label class="uk-form-label" for="form-director">Директор</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-director" type="text" name="director" value="{% if partner %}{{ partner.director }}{% endif %}" placeholder="ФИО Директора" required>
+                                </div>
+                            </div>
+
+                            <div class="uk-margin-left uk-width-1-3">
+                                <label class="uk-form-label" for="form-email">Email</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-email" type="email" name="email" value="{% if partner %}{{ partner.email }}{% endif %}" placeholder="Email" required>
+                                </div>
+                            </div>
+
+                            <div class="uk-margin-left uk-width-1-3">
+                                <label class="uk-form-label" for="form-phone">Телефон</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-phone" type="tel" name="phone" value="{% if partner %}{{ partner.phone }}{% endif %}" placeholder="Телефон" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-top" type="submit" style="background-color: #67BA80;">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
