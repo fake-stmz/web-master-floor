@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %} | Рассчитать количество материала{% endblock %}
+
+{% block content %}
+    <div class="uk-container uk-margin-top">
+        <div class="uk-card uk-card-default" style="background-color: #F4E8D3;">
+            <div class="uk-card-header">
+                <h2 class="uk-card-title uk-text-center">Рассчет количества материала</h3>
+            </div>
+
+            <div class="uk-card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="method-type-id">Идентификатор типа продукции</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="method-type-id" type="number" name="type-id" value="{% if product_type_id %}{{ product_type_id }}{% endif %}" placeholder="Идентификатор типа продукции" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="method-material-type-id">Идентификатор типа материала</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="method-material-type-id" type="number" name="material-type-id" value="{% if material_type_id %}{{ material_type_id }}{% endif %}" placeholder="Идентификатор типа материала" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="method-count">Количество продукции</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="method-count" type="number" name="count" value="{% if product_count %}{{ product_count }}{% endif %}" placeholder="Количество продукции" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="method-first-param">Первый параметр продукции</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="method-first-param" type="number" step="any" name="first-param" value="{% if first_parameter %}{{ first_parameter }}{% endif %}" placeholder="Первый параметр продукции" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="method-second-param">Второй параметр продукции</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="method-second-param" type="number" step="any" name="second-param" value="{% if second_parameter %}{{ second_parameter }}{% endif %}" placeholder="Второй параметр продукции" required>
+                        </div>
+                    </div>
+
+                    {% if material_count %}
+                    <div uk-alert class="uk-alert-success" style="background-color: #67BA80; color: white;">
+                        Количество материала: {{ material_count }}
+                    </div>
+                    {% endif %}
+
+                    <button class="uk-button uk-button-primary uk-width-1-1" type="submit" style="background-color: #67BA80;">Рассчитать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

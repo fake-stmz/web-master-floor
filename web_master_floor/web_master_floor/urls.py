@@ -23,5 +23,6 @@ urlpatterns = [
     path('', views.partner_list, name='partner_list'),
     path('edit/<int:partner_id>', views.edit_partner, name='edit_partner'),
     path('add/', views.add_partner, name='add_partner'),
-    path('history/<int:partner_id>', views.sales_history, name='sales_history')
+    path('history/<int:partner_id>', views.sales_history, name='sales_history'),
+    path('materials/', views.material_count, name='material_count')
 ]

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
+from math import ceil
 
 
 def partner_list(request):
@@ -54,6 +55,31 @@ def sales_history(request, partner_id):
     return render(request, 'sales_history.html', { 'sales': sales, 'partner_name': partner_name })
 
 
+def material_count(request):
+    
+    if request.method == 'POST':
+        product_type_id = int(request.POST.get('type-id'))
+        material_type_id = int(request.POST.get('material-type-id'))
+        product_count = int(request.POST.get('count'))
+        first_parameter = float(request.POST.get('first-param'))
+        second_parameter = float(request.POST.get('second-param'))
+        
+        material_count = calculate_material_count(product_type_id, material_type_id, product_count, first_parameter, second_parameter)
+        
+        context = {
+            'product_type_id': product_type_id,
+            'material_type_id': material_type_id,
+            'product_count': product_count,
+            'first_parameter': first_parameter,
+            'second_parameter': second_parameter,
+            'material_count': material_count
+        }
+        
+        return render(request, 'material_count.html', context)
+    
+    return render(request, 'material_count.html')
+
+
 def create_or_update_partner(request, partner_id=None):
     
     try:
@@ -86,3 +112,21 @@ def create_or_update_partner(request, partner_id=None):
         return "Данные введены некорректно"
     
     return
+
+
+def calculate_material_count(
+        product_type_id: int, 
+        material_type_id: int,
+        product_count: int,
+        first_parameter: float,
+        second_parameter: float) -> int:
+    
+    material_count = 0
+    
+    try:
+        material_count = product_count * first_parameter * second_parameter * float(Product_Type.objects.get(id=product_type_id).coefficient)
+        material_count = material_count / (1 - float(Material.objects.get(id=material_type_id).defect_rate))
+    except:
+        material_count = -1
+    
+    return ceil(material_count) if material_count > 0 else -1
