@@ -2,6 +2,10 @@
 
 Программный модуль "Партнеры" для системы компании "Мастер пол".
 
+Демонстрация работы модуля:
+
+https://github.com/user-attachments/assets/0a3be660-decf-41ba-a43e-74d8c45a1ded
+
 Схема БД:
 
 <img alt="Схема БД" src="docs_media/er-diagram.png" />
