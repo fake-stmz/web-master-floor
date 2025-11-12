@@ -6,8 +6,8 @@ from math import ceil
 def partner_list(request):
     """Список партнеров"""
     
-    # Все партнеры
-    partners = Partner.objects.all()
+    # Все партнеры (сортировка по имени в алфавитном порядке)
+    partners = Partner.objects.all().order_by('name')
     
     return render(request, 'partner_list.html', { 'partners': partners })
 
@@ -65,8 +65,8 @@ def add_partner(request):
 def sales_history(request, partner_id):
     """История реализации продукции партнера"""
     
-    # Все продажи партнера
-    sales = Sale.objects.filter(partner=partner_id)
+    # Все продажи партнера (сортировка по дате - сначала новые)
+    sales = Sale.objects.filter(partner=partner_id).order_by('-sale_date')
     
     # Имя партнера (чтобы вывести в заголовке)
     partner_name = Partner.objects.get(id=partner_id).name
