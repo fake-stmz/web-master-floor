@@ -6,6 +6,8 @@
     <div class="uk-container uk-margin-top">
         <h1 class="uk-title uk-text-center">{{ partner_name }} | История реализации</h1>
 
+        <a class="uk-button uk-button-primary uk-width-1-1" href="{% url 'partner_list' %}" style="background-color: #67BA80;">Назад</a>
+
         {% for sale in sales %}
         <div class="uk-card uk-card-default uk-margin" style="background-color: #F4E8D3;">
             <div class="uk-card-body">
