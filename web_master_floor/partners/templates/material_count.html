@@ -5,14 +5,17 @@
 {% block content %}
     <div class="uk-container uk-margin-top">
         <div class="uk-card uk-card-default" style="background-color: #F4E8D3;">
+            <!-- Заголовок -->
             <div class="uk-card-header">
                 <h2 class="uk-card-title uk-text-center">Рассчет количества материала</h3>
             </div>
 
             <div class="uk-card-body">
+                <!-- Форма -->
                 <form method="post">
                     {% csrf_token %}
 
+                    <!-- Идентификатор типа продукции -->
                     <div class="uk-margin">
                         <label class="uk-form-label" for="method-type-id">Идентификатор типа продукции</label>
                         <div class="uk-form-controls">
@@ -20,6 +23,7 @@
                         </div>
                     </div>
 
+                    <!-- Идентификатор типа материала -->
                     <div class="uk-margin">
                         <label class="uk-form-label" for="method-material-type-id">Идентификатор типа материала</label>
                         <div class="uk-form-controls">
@@ -27,6 +31,7 @@
                         </div>
                     </div>
 
+                    <!-- Количество продукции -->
                     <div class="uk-margin">
                         <label class="uk-form-label" for="method-count">Количество продукции</label>
                         <div class="uk-form-controls">
@@ -34,6 +39,7 @@
                         </div>
                     </div>
 
+                    <!-- Параметры продукции -->
                     <div class="uk-margin">
                         <label class="uk-form-label" for="method-first-param">Первый параметр продукции</label>
                         <div class="uk-form-controls">
@@ -48,12 +54,14 @@
                         </div>
                     </div>
 
+                    <!-- Результат -->
                     {% if material_count %}
                     <div uk-alert class="uk-alert-success" style="background-color: #67BA80; color: white;">
                         Количество материала: {{ material_count }}
                     </div>
                     {% endif %}
 
+                    <!-- Кнопка рассчета -->
                     <button class="uk-button uk-button-primary uk-width-1-1" type="submit" style="background-color: #67BA80;">Рассчитать</button>
                 </form>
             </div>

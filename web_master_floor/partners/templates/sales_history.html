@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %} | История продаж{% endblock %}
+{% block title %} | История реализации{% endblock %}
 
 {% block content %}
     <div class="uk-container uk-margin-top">
+        <!-- Заголовок -->
         <h1 class="uk-title uk-text-center">{{ partner_name }} | История реализации</h1>
 
+        <!-- Кнопка назад -->
         <a class="uk-button uk-button-primary uk-width-1-1" href="{% url 'partner_list' %}" style="background-color: #67BA80;">Назад</a>
 
+        <!-- Список продаж -->
         {% for sale in sales %}
         <div class="uk-card uk-card-default uk-margin" style="background-color: #F4E8D3;">
             <div class="uk-card-body">
                 <div class="uk-flex uk-flex-between uk-flex-middle">
+                    <!-- Продукт -->
                     <h3 class="uk-card-title uk-margin-remove-bottom">{{ sale.product.name }}</h3>
 
+                    <!-- Количество и дата продажи -->
                     <div>
                         <p class="uk-text-right">Количество: {{ sale.quantity }}</p>
                         <p class="uk-text-right uk-margin-remove-bottom">Дата: {{ sale.sale_date|date:"d.m.Y" }}</p>
@@ -21,6 +26,9 @@
                 </div>
             </div>
         </div>
+        {% empty %}
+        <!-- Нет продаж? Ну и ладно -->
+        <p class="uk-text-center">Нет продаж</p>
         {% endfor %}
     </div>
 {% endblock %}

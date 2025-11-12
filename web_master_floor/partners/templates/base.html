@@ -6,28 +6,35 @@
 <head>
     <meta charset="utf-8">
     <title>Мастер пол{% block title %}{% endblock %}</title>
+    <!-- UIkit -->
     <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}">
     <script src="{% static 'js/uikit.min.js' %}"></script>
     <script src="{% static 'js/uikit-icons.min.js' %}"></script>
+    <!-- Шрифт -->
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
 </head>
 
 <body style="font-family: 'Segoe UI', sans-serif;">
 
+    <!-- Шапка -->
     <header>
         <nav class="uk-navbar-container uk-navbar" uk-navbar style="background-color: #F4E8D3;">
 
+            <!-- Логотип -->
             <div class="uk-navbar-left uk-margin-left">
                 <a href="{% url 'partner_list' %}" class="uk-navbar-item uk-logo">
                     <img src="{% static 'imgs/logo.png' %}" alt="logo" width="50" height="50"> Мастер пол
                 </a>
             </div>
             
+            <!-- Кнопки -->
             <div class ="uk-navbar-right uk-margin-right">
+                <!-- Переход на тестирование метода -->
                 <div class="uk-navbar-item">
                     <a class="uk-button uk-button-primary" href="{% url 'material_count' %}" style="background-color: #67BA80;">Рассчитать количество материала</a>
                 </div>
 
+                <!-- Вход/выход из профиля (в ТЗ этого оказывается нет, но я уже сделал... пусть будет) -->
                 <div class="uk-navbar-item">
                     {% if user.is_authenticated %}
                     <a class="uk-button uk-button-primary" href="#" style="background-color: #67BA80;">Выйти</a>
@@ -40,7 +47,10 @@
         </nav>
     </header>
 
+    <!-- Основной контент -->
+    <main>
     {% block content %}{% endblock %}
+    </main>
 
 </body>
 
