@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load phone_format %}
+
 {% block title %} | Список партнеров{% endblock %}
 
 {% block content %}
@@ -16,6 +18,7 @@
                     <div>
                         <h3 class="uk-card-title">{{ partner.partner_type }} | <a class="uk-link-text" href="{% url 'sales_history' partner.id %}">{{ partner.name }}</a></h3>
                         <p>Директор: {{ partner.director }}</p>
+                        <p>Телефон: {{ partner.phone|slugify|phone_format }}</p>
                         <p>Рейтинг: {{ partner.rating }}</p>
                     </div>
 
